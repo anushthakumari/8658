@@ -74,3 +74,5 @@ temp/
 
 # Backup files
 *.bak
+
+.vercel

@@ -1,43 +1,41 @@
-import express from 'express';
+import express from "express";
 import {
-  getSavingsGoals,
-  getActiveSavingsGoals,
-  getCompletedSavingsGoals,
-  getExpiringSoonSavingsGoals,
-  getSavingsGoalById,
-  createSavingsGoal,
-  updateSavingsGoal,
-  updateSavingsGoalProgress,
-  deleteSavingsGoal,
-  getSavingsGoalsStats
-} from '../controllers/savingsGoalController';
-import { protect } from '../middleware/auth'; // Assuming you have auth middleware
+	getSavingsGoals,
+	getActiveSavingsGoals,
+	getCompletedSavingsGoals,
+	getExpiringSoonSavingsGoals,
+	getSavingsGoalById,
+	createSavingsGoal,
+	updateSavingsGoal,
+	updateSavingsGoalProgress,
+	deleteSavingsGoal,
+	getSavingsGoalsStats,
+} from "../controllers/savingsController";
+import { authenticate } from "../middleware/auth"; // Assuming you have auth middleware
 
 const router = express.Router();
 
 // Apply authentication middleware to all routes
-router.use(protect);
+router.use(authenticate);
 
 // Stats route (should be before :id route)
-router.get('/stats', getSavingsGoalsStats);
+router.get("/stats", getSavingsGoalsStats);
 
 // Specific goal type routes
-router.get('/active', getActiveSavingsGoals);
-router.get('/completed', getCompletedSavingsGoals);
-router.get('/expiring-soon', getExpiringSoonSavingsGoals);
+router.get("/active", getActiveSavingsGoals);
+router.get("/completed", getCompletedSavingsGoals);
+router.get("/expiring-soon", getExpiringSoonSavingsGoals);
 
 // Main CRUD routes
-router.route('/')
-  .get(getSavingsGoals)
-  .post(createSavingsGoal);
+router.route("/").get(getSavingsGoals).post(createSavingsGoal);
 
-router.route('/:id')
-  .get(getSavingsGoalById)
-  .put(updateSavingsGoal)
-  .delete(deleteSavingsGoal);
+router
+	.route("/:id")
+	.get(getSavingsGoalById)
+	.put(updateSavingsGoal)
+	.delete(deleteSavingsGoal);
 
 // Progress update route
-router.patch('/:id/progress', updateSavingsGoalProgress);
+router.patch("/:id/progress", updateSavingsGoalProgress);
 
 export default router;
-
