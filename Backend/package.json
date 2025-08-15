@@ -4,7 +4,7 @@
   "description": "Backend API for FreelancerPro - Financial Management System",
   "main": "dist/server.js",
   "scripts": {
-    "start": "SET PORT=5001 && node dist/server.js",
+    "start": "export PORT=5001 && node dist/server.js",
     "dev": "SET PORT=5001 && nodemon src/server.ts",
     "build": "tsc",
     "test": "jest",
